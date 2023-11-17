@@ -1,0 +1,39 @@
+---
+title: java.sql.SQLSyntaxErrorException
+date: '2023-11-17'
+tags: ['java', 'exception', 'SQLSyntaxErrorException']
+draft: true
+summary: 'java.sql.SQLSyntaxErrorException 예외를 만났을 때, 해결했던 과정을 공유하는 포스트입니다. 이 포스트를 보는 분이 저와 같은 케이스여서 해결되었으면 좋겠네요!'
+---
+
+java.sql.SQLSyntaxErrorException 예외를 만났을 때, 해결했던 과정을 공유하는 포스트입니다. 이 포스트를 보는 분이 저와 같은 케이스여서 해결되었으면 좋겠네요!
+
+## 예외 해결
+
+이름에서 유추할 수 있듯이, SQL 문법이 잘못되었을 때 발생할 수 있는 예외입니다.
+
+저는 Mybatis를 사용하다가 이 예외가 발생했었습니다.
+
+```
+### Cause: java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax;
+check the manual that corresponds to your MySQL server version for the right syntax to use near 'WHERE ...
+```
+_(예외 로그에서 완전히 복붙하지 않고 조건은 숨겼습니다)_
+
+MyBatis Mapper xml 파일에 이렇게 쿼리를 작성해서 문제가 되었었는데요..
+
+```sql
+DELETE ${table_name} WHERE ${condition};
+```
+
+`FROM` 키워드를 넣지 않아서 생긴 문제였습니다 ㅠㅠ 아래와 같이 쿼리를 작성해야합니다.
+
+```sql
+DELETE FROM ${table_name} WHERE ${condition};
+```
+
+## 결론
+
+java.sql.SQLSyntaxErrorException 예외를 만나면 어떤 SQL에서 발생한 예외인지 확인하고, 그 쿼리가 문법에 문제가 없는지 확인하자!
+
+그럼, 모두 에러 없는 하루 보내시길 바라겠습니다~!
