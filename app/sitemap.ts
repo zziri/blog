@@ -4,7 +4,8 @@ import siteMetadata from '@/data/siteMetadata'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const siteUrl = siteMetadata.siteUrl
-  const blogRoutes = allBlogs.map((post) => ({
+  const notDraftBlogs = allBlogs.filter((post) => !post.draft)
+  const blogRoutes = notDraftBlogs.map((post) => ({
     url: `${siteUrl}/${post.path}`,
     lastModified: post.lastmod || post.date,
   }))
